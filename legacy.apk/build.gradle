@@ -1,0 +1,30 @@
+buildscript {
+  repositories {
+    google()
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:7.0.0'
+  }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 29     // 19==KitKat/4.4; 29
+  buildToolsVersion '29.0.0'
+  defaultConfig {
+      minSdkVersion 29      // Both new apps and app updates must target at least Android 9
+      targetSdkVersion 29  // 19==KitKat/4.4, to be accepted by Google Play Store, this need to be >=28 !!
+      versionCode 5        // A positive integer used as an internal version number
+      versionName "0.1"
+  }
+}
+
+allprojects {
+  repositories {
+      google() // and here
+      jcenter()
+  }
+}
+
