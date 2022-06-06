@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.quoinsight.legacy" xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:tools="http://schemas.android.com/tools" >
   <application android:label="QuoInsight☸Legacy☸2022" tools:replace="android:icon" android:icon="@drawable/icon" >
-    <activity android:name="MainActivity">
+    <activity android:name="MainActivity" android:exported="false">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

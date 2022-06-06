@@ -4,26 +4,54 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:7.0.0'
+    classpath 'com.android.tools.build:gradle:7.2.1'
   }
 }
 
 apply plugin: 'com.android.application'
 
+def getVersionCode = { ->
+    try {
+        def code = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'log', '-1', '--pretty=%ct'
+            standardOutput = code
+        }
+        return code.toString() as Integer % 1000000000
+    }
+    catch (ignored) {
+        return -1
+    }
+}
+
+def getVersionName = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'log', '-1', '--pretty=%ct'
+            standardOutput = stdout
+        }
+        def s = stdout.toString().trim().substring(1)
+        return s.substring(0, 3) + "." + s.substring(3, 6) + "." + s.substring(6, 9);
+    }
+    catch (ignored) {
+        return null
+    }
+}
+
 android {
-  compileSdkVersion 29     // 19==KitKat/4.4; 29
-  buildToolsVersion '29.0.0'
+  compileSdkVersion 32
   defaultConfig {
-      minSdkVersion 29      // Both new apps and app updates must target at least Android 9
-      targetSdkVersion 29  // 19==KitKat/4.4, to be accepted by Google Play Store, this need to be >=28 !!
-      versionCode 5        // A positive integer used as an internal version number
-      versionName "0.1"
+      minSdkVersion 28      // Android 9
+      targetSdkVersion 32   // Android 12
+      versionCode getVersionCode()
+      versionName getVersionName()
   }
 }
 
 allprojects {
   repositories {
-      google() // and here
+      google()
       jcenter()
   }
 }
