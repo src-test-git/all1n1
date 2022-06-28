@@ -12,12 +12,8 @@ apply plugin: 'com.android.application'
 
 def getVersionCode = { ->
     try {
-        def code = new ByteArrayOutputStream()
-        exec {
-            commandLine 'git', 'log', '-1', '--pretty=%ct'
-            standardOutput = code
-        }
-        return code.toString() as Integer % 1000000000
+        def ver = "git log -1 --pretty=%ct".execute().text
+        return ver.toString() as Integer % 1000000000
     }
     catch (ignored) {
         return -1
@@ -26,12 +22,7 @@ def getVersionCode = { ->
 
 def getVersionName = { ->
     try {
-        def stdout = new ByteArrayOutputStream()
-        exec {
-            commandLine 'git', 'log', '-1', '--pretty=%ct'
-            standardOutput = stdout
-        }
-        def s = stdout.toString().trim().substring(1)
+        def s = "git log -1 --pretty=%ct".execute().text.trim().substring(1)
         return s.substring(0, 3) + "." + s.substring(3, 6) + "." + s.substring(6, 9);
     }
     catch (ignored) {
